@@ -1,16 +1,20 @@
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Button, Snackbar, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import useDebounce from "../../hooks/useDebounce";
 import apiService from '../../services/api';
-import { useNavigate } from 'react-router';
+import { Container, FormContainer, StyledBox } from './login-styled';
 
 
 export const Login = () => {
   const [toggleRegister, setToggleRegister] = useState(false)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+
+  const [email, setEmail] = useState("eve.holt@reqres.in")
+  const [password, setPassword] = useState("pistol")
+
+  const [confirmPassword, setConfirmPassword] = useState("pistol")
   const [error, setError] = useState("");
+  const [toastOpen, setToastOpen] = useState({ open: false, message: "" })
   const navigate = useNavigate()
 
   const toggleLogin = () => {
@@ -36,8 +40,9 @@ export const Login = () => {
       const response = await apiService.register(email, password);
       localStorage.setItem("userToken", response.data.token)
       navigate("/dashboard")
-    } catch (error) {
-      console.log(error)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setToastOpen({ open: true, message: error.response.data.error })
     }
   };
 
@@ -46,48 +51,53 @@ export const Login = () => {
       const response = await apiService.login(email, password);
       localStorage.setItem("userToken", response.data.token);
       navigate("/dashboard")
-    } catch (error) {
-      console.log(error)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setToastOpen({ open: true, message: error.response.data.error })
     }
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-      flexDirection="column"
-    >
-      <Container maxWidth="sm" style={{ border: "solid 1px", flexDirection: "column", display: "flex", justifyContent: "center", padding: "20px", }}>
-        <h1 style={{ textAlign: "center" }}>
+    <StyledBox>
+      <Container maxWidth="sm">
+
+        <Typography variant='h3' style={{ textAlign: "center" }}>
           {toggleRegister ? "Sign in" : "Sign up"}
-        </h1>
+        </Typography>
 
+        <FormContainer>
+          {toggleRegister ?
+            <>
+              <TextField label="E-mail" variant="outlined" onChange={(e) => setEmail(e.target.value)} value={email} />
+              <TextField type='password' label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} value={password} />
+              <Button style={{ width: "50%", margin: "0 auto" }} variant="contained" onClick={() => handleLogin()}>Sign in</Button>
+              <div>
+                <Typography variant='h6'>Don't have an account? <Button onClick={() => toggleLogin()} size='small'> Register here</Button> </Typography>
+              </div>
+            </>
+            :
+            <>
+              <TextField label="E-mail" variant="outlined" onChange={(e) => setEmail(e.target.value)} value={email} />
+              <TextField type='password' label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} value={password} />
+              <TextField type='password' label="Confirm password" variant="outlined" onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmPassword}
+                error={Boolean(error)}
+                helperText={error} />
+              <Button style={{ width: "50%", margin: "0 auto" }} disabled={(Boolean(error))} onClick={() => handleRegister()} variant="contained">Sign up</Button>
+              <div>
+                <Typography variant='h6'>Already have an account? <Button onClick={() => toggleLogin()} size='small'>Login here</Button></Typography>
+              </div>
+            </>}
+        </FormContainer>
 
-        {toggleRegister ? (<div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <TextField label="E-mail" variant="outlined" onChange={(e) => setEmail(e.target.value)} value={email} />
-          <TextField type='password' label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} value={password} />
-          <Button style={{ width: "50%", margin: "0 auto" }} variant="contained" onClick={() => handleLogin()}>Sign in</Button>
-          <div>
-            <h3>Don't have an account? <Button onClick={() => toggleLogin()} size='small'>Register here</Button></h3>
-          </div>
-        </div>) :
-
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-            <TextField label="E-mail" variant="outlined" onChange={(e) => setEmail(e.target.value)} value={email} />
-            <TextField type='password' label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} value={password} />
-            <TextField type='password' label="Confirm password" variant="outlined" onChange={(e) => setConfirmPassword(e.target.value)}
-              value={confirmPassword}
-              error={Boolean(error)}
-              helperText={error} />
-            <Button style={{ width: "50%", margin: "0 auto" }} disabled={(Boolean(error))} onClick={() => handleRegister()} variant="contained">Sign up</Button>
-            <div>
-              <h3>Already have an account? <Button onClick={() => toggleLogin()} size='small'>Login here</Button></h3>
-            </div>
-          </div>}
-
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={toastOpen.open}
+          onClose={() => setToastOpen({ open: false, message: "" })}
+          autoHideDuration={5000}
+          message={toastOpen.message}
+        />
       </Container>
-    </Box >
+    </StyledBox >
   )
 }
