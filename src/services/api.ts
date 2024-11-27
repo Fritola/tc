@@ -27,6 +27,9 @@ const apiService = {
   getUser: (userId: number) => {
     return api.get(`/users/${userId}`);
   },
+  deleteUser: (userId: number) => {
+    return api.delete(`/users/${userId}`);
+  },
 };
 
 export default apiService;

@@ -1,12 +1,78 @@
+import { createTheme, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
-import { Login } from './pages/login';
 import { Dashboard } from './pages/dashboard';
+import { Login } from './pages/login';
 
 interface ProtectedRouteProps {
   children: React.ReactElement;
 }
 
 function App() {
+
+  const theme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#ff5252',
+        contrastText: '#ffffff',
+      },
+      secondary: {
+        main: '#053b97',
+        contrastText: '#000000',
+      },
+      background: {
+        default: '#121212',
+        paper: '#1e1e1e',
+      },
+      text: {
+        primary: '#ffffff',
+        secondary: '#aaaaaa',
+      },
+    },
+    colorSchemes: {
+      dark: {
+        palette: {
+          primary: {
+            main: '#ff5252',
+            contrastText: '#ffffff',
+          },
+          secondary: {
+            main: '#2979ff',
+            contrastText: '#000000',
+          },
+          background: {
+            default: '#121212',
+            paper: '#1e1e1e',
+          },
+          text: {
+            primary: '#ffffff',
+            secondary: '#aaaaaa',
+          },
+        },
+      },
+      light: {
+        palette: {
+          primary: {
+            main: '#82aef9',
+            contrastText: '#ffffff',
+          },
+          secondary: {
+            main: '#ff5252',
+            contrastText: '#000000',
+          },
+          background: {
+            default: '#ffffff',
+            paper: '#f5f5f5',
+          },
+          text: {
+            primary: '#000000',
+            secondary: '#444444',
+          },
+        },
+      },
+    },
+  });
+
 
   const PublicRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     const accessToken = localStorage.getItem("userToken");
@@ -27,7 +93,7 @@ function App() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route
@@ -49,7 +115,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 

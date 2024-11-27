@@ -30,3 +30,8 @@ export const ActionButtonContainer = styled.div`
   right: 0;
   position: absolute;
 `;
+
+export const EditContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
