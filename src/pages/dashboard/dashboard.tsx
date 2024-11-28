@@ -2,15 +2,16 @@ import AddCircle from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { Avatar, Button, CardMedia, FormControlLabel, IconButton, Pagination, Switch, TextField, Typography, useColorScheme } from "@mui/material";
+import { Avatar, Button, CardMedia, IconButton, Pagination, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Header } from '../../components/Header';
 import apiService from "../../services/api";
 import { StyledBox } from "../login/login-styled";
 import { ActionButtonContainer, CardContainer, CardContent, Container } from './dashboard-styled';
 import { UserData, UsersInterface } from './dashboard-types';
 
 export const Dashboard = () => {
-  const { mode, setMode } = useColorScheme();
+  // const { mode, setMode } = useColorScheme();
 
   const [userData, setUserData] = useState<UserData>()
   const [page, setPage] = useState(1);
@@ -91,26 +92,17 @@ export const Dashboard = () => {
     setEditUserId(null);
   };
 
-  const toggleTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMode(event.target.checked ? 'dark' : 'light');
-  };
+  // const toggleTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setMode(event.target.checked ? 'dark' : 'light');
+  // };
 
 
   return (
     <>
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={mode === 'dark'}
-              onChange={toggleTheme}
-              name="themeToggle"
-              color="secondary"
-            />
-          }
-          label={mode === 'dark' ? 'Dark Mode' : 'Light Mode'}
-        />
+      <div>
+        <Header />
       </div>
+
       <StyledBox>
         <h3>Dashboard</h3>
         <Container maxWidth="md">

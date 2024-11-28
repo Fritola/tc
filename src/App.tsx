@@ -12,10 +12,6 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: 'dark',
-      primary: {
-        main: '#ff5252',
-        contrastText: '#ffffff',
-      },
       secondary: {
         main: '#053b97',
         contrastText: '#000000',
@@ -25,7 +21,7 @@ function App() {
         paper: '#1e1e1e',
       },
       text: {
-        primary: '#ffffff',
+        primary: '#000',
         secondary: '#aaaaaa',
       },
     },
@@ -34,7 +30,7 @@ function App() {
         palette: {
           primary: {
             main: '#ff5252',
-            contrastText: '#ffffff',
+            contrastText: '#000',
           },
           secondary: {
             main: '#2979ff',
@@ -45,7 +41,7 @@ function App() {
             paper: '#1e1e1e',
           },
           text: {
-            primary: '#ffffff',
+            primary: '#000',
             secondary: '#aaaaaa',
           },
         },
@@ -54,14 +50,14 @@ function App() {
         palette: {
           primary: {
             main: '#82aef9',
-            contrastText: '#ffffff',
+            contrastText: '#000',
           },
           secondary: {
             main: '#ff5252',
             contrastText: '#000000',
           },
           background: {
-            default: '#ffffff',
+            default: '#000',
             paper: '#f5f5f5',
           },
           text: {
@@ -93,7 +89,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} defaultMode='dark'>
       <BrowserRouter>
         <Routes>
           <Route
