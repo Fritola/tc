@@ -83,7 +83,7 @@ function App() {
     const accessToken = localStorage.getItem("userToken");
 
     if (!accessToken) {
-      return <Navigate to="/login" replace />;
+      return <Navigate to="/" replace />;
     }
     return children;
   };
@@ -93,7 +93,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route
-            path="/login"
+            path="/"
             element={
               <PublicRoute>
                 <Login />
