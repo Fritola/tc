@@ -5,14 +5,13 @@ import useDebounce from "../../hooks/useDebounce";
 import apiService from '../../services/api';
 import { Container, FormContainer, StyledBox } from './login-styled';
 
-
 export const Login = () => {
   const [toggleRegister, setToggleRegister] = useState(false)
 
-  const [email, setEmail] = useState("eve.holt@reqres.in")
-  const [password, setPassword] = useState("pistol")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  const [confirmPassword, setConfirmPassword] = useState("pistol")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState("");
   const [toastOpen, setToastOpen] = useState({ open: false, message: "" })
   const navigate = useNavigate()
@@ -68,9 +67,9 @@ export const Login = () => {
         <FormContainer>
           {toggleRegister ?
             <>
-              <TextField label="E-mail" variant="outlined" onChange={(e) => setEmail(e.target.value)} value={email} />
-              <TextField type='password' label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} value={password} />
-              <Button style={{ width: "50%", margin: "0 auto" }} variant="contained" onClick={() => handleLogin()}>Sign in</Button>
+              <TextField label="E-mail" id="email-input" variant="outlined" onChange={(e) => setEmail(e.target.value)} value={email} />
+              <TextField type='password' data-testid="password-input" label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} value={password} />
+              <Button style={{ width: "50%", margin: "0 auto" }} id="sign-button" variant="contained" onClick={() => handleLogin()}>Sign in</Button>
               <div>
                 <Typography variant='h6'>Don't have an account? <Button onClick={() => toggleLogin()} size='small'> Register here</Button> </Typography>
               </div>

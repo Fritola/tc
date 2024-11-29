@@ -108,7 +108,7 @@ export const Dashboard = () => {
         <Container maxWidth="md">
 
           {userData?.data?.map((user) => (
-            <CardContainer sx={[
+            <CardContainer data-testid="user-cards" sx={[
               (theme) => ({
                 color: '#fff',
                 backgroundColor: theme.palette.primary.main,
