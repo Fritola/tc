@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Snackbar, TextField, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -39,7 +40,6 @@ export const Login = () => {
       const response = await apiService.register(email, password);
       localStorage.setItem("userToken", response.data.token)
       navigate("/dashboard")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setToastOpen({ open: true, message: error.response.data.error })
     }
@@ -50,7 +50,6 @@ export const Login = () => {
       const response = await apiService.login(email, password);
       localStorage.setItem("userToken", response.data.token);
       navigate("/dashboard")
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setToastOpen({ open: true, message: error.response.data.error })
     }

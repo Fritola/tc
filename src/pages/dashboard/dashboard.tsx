@@ -11,8 +11,6 @@ import { ActionButtonContainer, CardContainer, CardContent, Container } from './
 import { UserData, UsersInterface } from './dashboard-types';
 
 export const Dashboard = () => {
-  // const { mode, setMode } = useColorScheme();
-
   const [userData, setUserData] = useState<UserData>()
   const [page, setPage] = useState(1);
   const [editUserId, setEditUserId] = useState<number | null>(null);
@@ -91,11 +89,6 @@ export const Dashboard = () => {
     }));
     setEditUserId(null);
   };
-
-  // const toggleTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setMode(event.target.checked ? 'dark' : 'light');
-  // };
-
 
   return (
     <>
